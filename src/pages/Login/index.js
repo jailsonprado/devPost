@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, {useState, useContext} from 'react';
-import {Alert, Text} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 
 import {AuthContext} from '../../contexts/auth';
 
@@ -20,7 +20,7 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {signUp, signIn} = useContext(AuthContext);
+  const {signUp, signIn, loadingAuth} = useContext(AuthContext);
 
   function toggleLogin() {
     setLogin(!login);
@@ -65,7 +65,11 @@ export default function Login() {
           onChangeText={text => setPassword(text)}
         />
         <Button onPress={handleSign}>
-          <ButtonText>Acessar</ButtonText>
+          {loadingAuth ? (
+            <ActivityIndicator size={20} color="#fff" />
+          ) : (
+            <ButtonText>Acessar</ButtonText>
+          )}
         </Button>
         <SignUpButton onPress={toggleLogin}>
           <SignUpText>Criar uma conta</SignUpText>
@@ -96,7 +100,11 @@ export default function Login() {
         value={password}
       />
       <Button onPress={handleSignup}>
-        <ButtonText>Cadastrar</ButtonText>
+        {loadingAuth ? (
+          <ActivityIndicator size={20} color="#fff" />
+        ) : (
+          <ButtonText>Cadastrar</ButtonText>
+        )}
       </Button>
       <SignUpButton onPress={toggleLogin}>
         <SignUpText>Já tenho uma conta?</SignUpText>
